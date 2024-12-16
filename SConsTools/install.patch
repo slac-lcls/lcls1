@@ -1,0 +1,78 @@
+diff --git a/src/SConstruct.main b/src/SConstruct.main
+index 2eceff4..61548d2 100644
+--- a/src/SConstruct.main
++++ b/src/SConstruct.main
+@@ -62,12 +62,12 @@ except IOError:
+     print("File .sit_release does not exist or unreadable.", file=sys.stderr)
+     print("Trying to run scons outside release directory?", file=sys.stderr)
+     Exit(2)
+-if os.environ["SIT_RELEASE"] != test_rel:
+-    print("* SIT_RELEASE conflicts with release directory", file=sys.stderr)
+-    print("* SIT_RELEASE =", os.environ["SIT_RELEASE"], file=sys.stderr)
+-    print("* .sit_release =", test_rel, file=sys.stderr)
+-    print("* Please run sit_setup or relupgrade", file=sys.stderr)
+-    Exit(2)
++#if os.environ["SIT_RELEASE"] != test_rel:
++#    print("* SIT_RELEASE conflicts with release directory", file=sys.stderr)
++#    print("* SIT_RELEASE =", os.environ["SIT_RELEASE"], file=sys.stderr)
++#    print("* .sit_release =", test_rel, file=sys.stderr)
++#    print("* Please run sit_setup or relupgrade", file=sys.stderr)
++#    Exit(2)
+ 
+ # check conda
+ if os.environ.get('SIT_USE_CONDA', None):
+@@ -242,7 +242,8 @@ env.Default(all)
+ # Special install target
+ #
+ if env['CONDA']:
+-    destdir = get_conda_env_path()
++    #destdir = get_conda_env_path()
++    destdir = os.environ['DESTDIR']
+     conda_install = env.CondaInstall([Dir(destdir)], [])
+     env.AlwaysBuild(conda_install)
+     env.Alias('conda-install', [conda_install])
+diff --git a/src/tools/conda_install.py b/src/tools/conda_install.py
+index aad50b8..5d74f48 100644
+--- a/src/tools/conda_install.py
++++ b/src/tools/conda_install.py
+@@ -66,9 +66,9 @@ def copytree(src, dest, link_prefix):
+         destname = os.path.join(dest, name)
+         if os.path.islink(srcname):
+             src_real = os.path.realpath(srcname)
+-            if not src_real.startswith(link_prefix):
+-                info("conda_install: skipping src=%s, realpath from symlink, it does not start with %s" % (src_real, link_prefix))
+-                continue
++            #if not src_real.startswith(link_prefix):
++            #    info("conda_install: skipping src=%s, realpath from symlink, it does not start with %s" % (src_real, link_prefix))
++            #    continue
+             srcname = src_real
+         if os.path.isdir(srcname):
+             mkdirOrFail(destname)
+@@ -93,7 +93,7 @@ class _makeCondaInstall(object):
+         if not os.path.exists(condaPrefix): fail("condaInstall - destdir %s doesn't exist, it should be the _build conda environment" % condaPrefix)
+         condaBin = os.path.join(condaPrefix, 'bin')
+         if not os.path.exists(condaBin): fail("condaInstall - destdir %s does not have a 'bin' subdir" % destdir)
+-        if not os.path.exists(os.path.join(condaBin, 'python')): fail("condaInstall - there is no python executable in the 'bin' subdir to the condaPrefix=%s, it does not look like we are installing into a conda environment" % condaPrefix)
++        #if not os.path.exists(os.path.join(condaBin, 'python')): fail("condaInstall - there is no python executable in the 'bin' subdir to the condaPrefix=%s, it does not look like we are installing into a conda environment" % condaPrefix)
+ 
+         sit_arch = env['SIT_ARCH']
+         sp_dir = env.get('SP_DIR', None)  # defined by conda build
+@@ -103,7 +103,8 @@ class _makeCondaInstall(object):
+             import sys
+             version_str = "%d.%d"%(sys.version_info[0:2])
+             warning('SP_DIR is not defined, assuming this is testing outside conda-build, setting sp_dir for python %s'%version_str) 
+-            sp_dir = os.path.join(os.environ['CONDA_PREFIX'], 'lib', 'python%s'%version_str, 'site-packages')
++            sp_dir = os.path.join(os.environ['DESTDIR'], 'lib', 'python%s'%version_str, 'site-packages')
++            os.makedirs(sp_dir, exist_ok=True)
+             assert os.path.exists(sp_dir), 'SP_DIR not defined, and testing sp_dir=%s doesnt exist' % sp_dir
+ 
+         # get SConstruct.main installed
+@@ -119,7 +120,7 @@ class _makeCondaInstall(object):
+                          os.path.join('arch', sit_arch, 'geninc'):pjoin(condaPrefix,'include'),
+                          os.path.join('arch', sit_arch, 'python'):sp_dir,
+         }
+-        
++
+         for releaseDir, condaDir in release2conda.items():
+             if not os.path.exists(releaseDir):
+                 warning("Release path %s does not exist, will not install from it" % releaseDir)

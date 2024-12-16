@@ -1,0 +1,443 @@
+#--------------------------------------------------------------------------
+# File and Version Information:
+#  $Id$
+#
+# Description:
+#  ChangeLog file for package psana-tools
+#------------------------------------------------------------------------
+
+Package author: David A. Schneider
+
+Please describe any modifications that you made to the package in the
+reverse time order.
+
+Tag: V01-00-05
+2021-12-07 Daniel Damiani
+- update to pdsdata 9.3.2 for TimeTool
+
+Tag: V01-00-04
+2021-09-22 Daniel Damiani
+- update to pdsdata 9.3.1 for Alvium detector
+
+Tag: V00-08-56
+2016-12-16 David Schneider
+- update to pdsdata 8.7.0 for JungFrau detector
+
+Tag: V00-08-56
+2016-11-10 David Schneider
+-  update to pdsdata 8.6.18 for ControlsCameraConfig
+
+Tag: V00-08-55
+2016-10-17 David Schneider
+- update to pdsdata 8.6.17 and psddldata V01-00-49 for fix to BldDataBeamMonitorV1
+
+Tag: V00-08-54
+2016-9-30 David Schneider
+- update to pdsdata 8.6.16 and psddldata V01-00-48 for BldDataBeamMonitorV1 and BldUsdUsbV1
+
+Tag: V00-08-53
+2016-9-5 David Schneider
+- use AppDataPath to get the test files, allow testing from site-packages in conda env
+
+Tag: V00-08-52
+2016-8-8 David Schneider
+- have xtclinedump -h return 0 instead of -1 so that it can be testable
+	
+Tag: V00-08-51
+2016-8-8 David Schneider
+- let user set environment variable NOCLEAN=1 to keep /tmp dirs for tests
+
+Tag: V00-08-50
+2016-8-6 David Schneider
+- use /tmp for test output
+- remove interface to getting output directory within release
+- introduce new class with context manager for writing to temp files
+- shorten number of tests, get testing to go faster
+	
+Tag: V00-08-49
+2016-7-21 David Schneider
+- disable extpackage tests because they fail or draw in too many 
+  dependecies in conda
+	
+Tag: V00-08-48
+2016-6-14 David Schneider
+- disable unit tests on rhel5 build machine because it is too loaded
+
+Tag: V00-08-47
+2016-6-13 David Schneider
+- update to pdsdata 8.6.12 for Partition::ConfigV2 JIRA PSAS-241
+
+Tag: V00-08-46
+2016-6-2 David Schneider
+- update to pdsdata 8.6.10 with BldDataEOrbitsV0 JIRA PSAS-239
+  and smldata fix PSAS-237
+
+Tag: V00-08-45
+2016-4-18 David Schneider
+- update to pdsdata 8.6.8 with Andor::ConfigV2 JIRA PSAS-229
+
+Tag: V00-08-44
+2016-4-14 David Schneider
+- work on test data management, reporting new types found, 
+  look in multifile test sets for types, keep one run in each
+  multifile test
+	
+Tag: V00-08-43
+2016-4-4 David Schneider
+- update to pdsdata 8.6.7 for UsdUsb::FexConfigV1,FexDataV1 and Generic1D::ConfigV0,DataV0
+- add by hand dump of generic1D data - needs detector xface - JIRA PSAS-226
+- update psanaTestLib to handle test data directories that are unfinished - no runs in them	
+- update regression test files:
+  - calculate md5sums of current test data (update data/previousDump.txt)
+  - add regression test for UsdUsb::Fex - multi 20
+  - record expected differences in xtc and h5 dump for multi test 20
+	
+Tag: V00-08-42
+- update to pdsdata 8.6.1 with Andor3d::FrameV1 (and ConfigV1) JIRA PSAS-214
+	
+Tag: V00-08-41
+2016-1-26 David Schneider
+- extend pdsdata unit test to cover smldata generation of files with
+  incomplete contribution, see JIRA PSAS-212
+
+Tag: V00-08-40
+2016-1-22 David Schneider
+- add unit tests for pdsdata, currently just test some cases of the smldata
+  tool that we know work. It doesn't work on some test files with damage,
+  see JIRA PSAS-212
+
+Tag: V00-08-39
+2016-1-12 David Schneider
+- test that IndexError exception is now thrown when accessing acqiris data elements that
+  are out of bound, JIRA PSAS-207
+
+Tag: V00-08-38
+2015-12-10 David Schneider
+- update to pdsdata 8.4.5 with modified Epix::Config100aV2, and Epix::ElementV3 JIRA PSAS-198
+
+Tag: V00-08-37
+2015-10-22 David Schneider
+- rename LiveAvail tests to LiveMode tests. 
+- add test to make sure live/dead mode produce same order
+	
+Tag: V00-08-36
+2015-10-21 David Schneider
+- add live mode small data testing utility. Utility takes a mapfile
+  giving datagram offsets.
+- update psanaTestLib to handle the hex output of dgheaders from xtclinedump
+- update psanaTestLib.copyBytes to understand 'end' to copy to end of file
+- create a unitTests file for liveAvail tests
+	
+Tag: V00-08-35
+2015-9-30 David Schneider
+- add option to print Dgram headers in hex to xtclinedump
+
+Tag: V00-08-34
+2015-8-31 David Schneider
+- extend data mover script to handle no small data files.
+- add unit test for JIRA PSAS-182 - verify live/inprogress event order
+  consistant with linear mode. Disable test so as to not complicate nightly.
+
+Tag: V00-08-33
+2015-8-27 David Schneider
+- add data mover script to test live small data. JIRA-85
+
+Tag: V00-08-32
+2015-8-14 David Schneider
+- disable live mode sim unit test since it failed once on a nightly in  
+  rel7 JIRA PSAS-177
+
+Tag: V00-08-31
+2015-8-10 David Schneider
+- put all output during unit testing in subdirectory based in SIT_ARCH
+
+Tag: V00-08-30
+2015-7-7 David Schneider
+- add function to get calib data dir for testing
+- update to pdsdata 8.3.1 with Epix::Config100aV2, JIRA PSAS-166
+
+Tag: V00-08-29
+2015-6-18 David Schneider
+- add function cmdTimeOutWithReturnCode() to psanaTestLib
+
+Tag: V00-08-28
+2015-5-1 David Schneider
+- update to pdsdata 8.2.7 with BldDataAnalogInputV1, JIRA PSAS-144
+
+Tag: V00-08-27
+2015-4-28 David Schneider
+- further modified xtc iterator to warn for large xtc extents, JIRA issue PSAS-141	
+
+Tag: V00-08-26
+2015-4-28 David Schneider
+- modify xtc iterator to print message for unusual events, JIRA issue PSAS-141	
+
+Tag: V00-08-25
+2015-4-28 David Schneider
+- copy pdsdata xtc iterator into psana_test so that it can be modified
+
+Tag: V00-08-24
+2015-4-9 David Schneider
+- add diagnostic command pyPsanaMonit and C++ module PsanaModuleGetObjects
+	
+Tag: V00-08-23
+2015-3-16 David Schneider
+- update psanaTestLib function copyToMultiTestDir to also create index files
+
+Tag: V00-08-22
+2015-3-3 David Schneider
+- small data JIRA issue PSAS-85
+- add option dump_sml to psana_test.dump which is false by default (means do not
+  dump small data types). This means be default we can compare dump of .smd.xtc and .xtc
+  and expect same thing, but put on option to see those types.
+- fix liveModeTest to ignore warnings in dump. Since psana now understands small data,
+  and I created that test data using a beta version of the small data tool, psana 
+  complains about finding small data in a .xtc file (but just as warnings).
+
+Tag: V00-08-21
+2015-2-24 David Schneider
+- fix rel6 build
+
+Tag: V00-08-20
+2015-2-24 David Schneider
+- add option --sml to xtclinedump to parse smlDataProxy payload
+
+Tag: V00-08-19
+2015-2-23 David Schneider
+- update to pdsdata 8.2.4 with EvrDataV4 and present function
+	
+Tag: V00-08-18
+2015-2-5 David Schneider
+- reenable livemod test
+	
+Tag: V00-08-17
+2015-2-4 David Schneider
+- I messed up the tag in the last commit and it is hard to undo that, so
+  psana_test is now at tag V00-08-17 - but this is not a major change.
+	
+Tag: V00-00-44
+2015-2-4 David Schneider
+- update psddlc wrapper, JIRA PSAS-103
+
+Tag: V00-00-43
+2015-2-2 David Schneider
+- regenerate for new pdsdata 8.2.2 with EBeamV7 fix. Also OceanOptics DataV3 and 
+  test bits on Quartz configV2 and smlData.
+- track JIRA PSAS-103.
+
+Tag: V00-00-42
+2015-01-08 David Schneider
+- add library code and unit test for live mode test. 
+- tests data with s80 stream to merge.
+- added multifile/test_009 test files - modified shrunken down xtc files for test
+- Track JIRA issue PSAS-4
+
+Tag: V00-00-41
+2014-11-25 David Schneider
+- regenerate for new pdsdata 8.1.10/psddldata V01-00-22 with TimeTool::ConfigV2, 
+  TimeTool::DataV2, Quartz::ConfigV2
+- Track JIRA issue PSAS-72
+
+Tag: V00-00-40
+2014-10-23 David Schneider
+- regenerate for new pdsdata 8.1.8/psddldata V01-00-19 with Epix::Config100aV1 and Epix::ElementV2
+  Track JIRA issue PSAS-56
+
+Tag: V00-00-39
+2014-10-23 David Schneider
+- fix bug with identifying data files on disk - minor feature not used in build or testing
+	
+Tag: V00-00-38
+2014-10-15 David Schneider
+- regenerate for new pdsdata 8.1.7/psddldata V01-00-18 with Bld::BldDataSpectrometerV1
+  Track JIRA issue PSAS-50
+
+Tag: V00-00-37
+2014-10-03 David Schneider
+- regenerate for new pdsdata 8.1.4/psddldata with: Evr::IOConfigV2. 
+  Track JIRA issue PSAS-41. 
+- Add test_088 to regression - file evrio.xtc from Matt with new type.
+
+
+Tag: V00-00-36
+2014-09-22 David Schneider
+- fix bug with unit tests for external packages. A test created an output
+  file in a directory where I had permission, but not psrel.
+
+Tag: V00-00-35
+2014-09-19 David Schneider
+- add regression tests for test data 84-87. These are sample xtc files
+  Matt provides that have the new types. tests 85-87exercise TimeTool::DataV1 
+  with/without the projections.  We test all three to cover zero length arrays 
+  to make sure our hdf5 schema handles them correctly.
+
+Tag: V00-00-34
+2014-09-18 David Schneider
+- regenerate dump module for new pdsdata 8.1.3/psddldata with:
+  TimeTool::ConfigV1, TimeTool::DataV1, L3T::DataV2, GenericPgp::ConfigV1
+
+Tag: V00-00-33
+2014-09-18 David Schneider
+- add unit tests for external packages. Test h5py, tables and pandas
+- test h5tools to excersice h5py vlen patch
+
+Tag: V00-00-32
+2014-09-16 David Schneider
+- add function for making small multifile test data with specific datagrams
+
+Tag: V00-00-31
+2014-09-16 David Schneider
+- test for Python str <-> C++ std::string event conversion in Psana
+	
+Tag: V00-00-30
+2014-09-11 David Schneider
+- Somehow the tags in the changLog are off by one with the tags. 
+  synching ChangeLog tag with svn tags.
+
+Tag: V00-00-29
+2014-09-11 David Schneider
+- test get/put with key strings for configStore/calibStore get/put test.
+
+Tag: V00-00-28
+2014-09-09 David Schneider
+- extend configStore calibStore get/put test a bit.
+
+Tag: V00-00-27
+2014-09-05 David Schneider
+- add test for configStore calibStore get/put interface. To make sure
+  we don't brake anything when addressing JIRA PSAS-25
+	
+Tag: V00-00-26
+2014-09-03 David Schneider
+- add tests for mpi split scan translator.
+- change test for new config file options in PSXtcInput to 'third event'
+- add option to psana dump module to skip dump of beginJob events - to get
+  mpi translate dump to look like typical translate dump - see JIRA PSAS-26
+	
+Tag: V00-00-25
+2014-08-28 Christopher O'Grady
+- switch to analyzing a smaller version of run 15, given the
+  fake run number "999"
+
+Tag: V00-00-24
+2014-08-27 Christopher O'Grady
+- remove temporary file created by index test
+
+Tag: V00-00-23
+2014-08-27 Christopher O'Grady
+- fix printout bug in index test
+
+Tag: V00-00-22
+2014-08-27 Christopher O'Grady
+- add indexing test to unitTests.py
+
+Tag: V00-00-21
+2014-08-07 David Schneider
+- fix bug causing unitTest failure with getMultiFileDataDir() function
+
+Tag: V00-00-20
+2014-08-06  David Schneider
+- use $SIT_ROOT environment variable to form path to test data
+
+Tag: V00-00-19
+2014-07-25  David Schneider
+- add test for psana shared memory mode.
+  Test is not part of regression for buildbot. Run manually with
+  python psana_test/src/psanaTestLib.py testshm
+
+Tag: V00-00-18
+2014-07-18  David Schneider
+- add unit test for merging control streams
+  multifile/test_004 has s80 stream data
+- add psana module noop, for testing
+- fix bug with psanaTestLib.py test set=full syntax
+- currently not adding test_004 to regression due to trac ticket:318
+
+Tag: V00-00-16 David Schneider
+- add test for data with BldEBeamV6, and two multi tests
+
+Tag: V00-00-15 David Schneider
+- fix bug with epics options
+
+Tag: V00-00-14
+2014-07-03 David Schneider
+- regenerate for new pdsdata/psddldata with BldEBeamV6
+
+Tag: V00-00-13
+2014-06-27 David Schneider
+- add multi test 001. 4 streams with two calib cycles.
+
+Tag: V00-00-12
+2014-06-27 David Schneider
+- update code to handle single or multi file (psana dataset) tests
+- add test for the first multifile test set
+
+Tag: V00-00-11
+2014-06-18 David Schneider
+- improve error messages when md5sum call fails
+
+Tag: V00-00-10
+2014-06-18 David Schneider
+- add test_082 to regression tests, new test data with 
+  BldDataFEEGasDetEnergyV1 and EPICS float of 200
+
+Tag: V00-00-09
+2014-06-16 David Schneider
+- regenerate previousDump.txt for new epics storing model that uses
+  event tag to save more recent pv from several recorders
+- add unit test where change observed (when using event tag)
+
+Tag: V00-00-08
+2014-06-14 David Schneider
+- regenerate dump module from psddldata V01-00-10
+- trac ticket #309
+
+Tag: V00-00-07
+2014-06-10 David Schneider
+- unit tests, make sure command line calls to psana don't accidentally
+  pick up a default psana.cfg file
+
+Tag: V00-00-06
+2014-06-10 David Schneider
+- fix bug with dumping ndarrays
+
+Tag: V00-00-05
+2014-06-08 David Schneider
+- Add Psana modules to test putting and getting ndarray's from event store
+
+Tag: V00-00-04
+2014-06-08 David Schneider
+- Integrate regression test into build (scons test).
+- Change dump to sort keys.
+- Change dump to include pvName in EPICS printout.
+- Regenerate previousDump.txt for sorted keys, for PSEnv V00-13-04 
+  and psddl_hdf2psana V00-09-08.
+
+Tag: V00-00-03
+2014-05-16 David Schneider
+- updated dumping of epics in dump and xtclinedump
+
+Tag: V00-00-02
+2014-05-16 David Schneider
+- Cleaned up code. 
+- Explicitly add libz (for adler32) to build through SConscript
+- Add dump of nonlinearCorrected for OceanOptics.Data
+- re-generated data/prev.txt
+	
+Tag: V00-00-01
+2014-05-15 David Schneider
+- First tag for a release.
+- Adjusted dump to print all epics info.
+- Added epics dbr type and numElements to xtclinedump xtc printout.
+- test data maintenance script is still work in progress.
+
+Tag: no tag yet
+2014-05-09 David Schneider
+- psana python module that dumps all non-epics data
+- got rid of much of the C++ Dump module.
+	
+Tag: No tag yet, just in development 
+2014-02-04 David A. Schneider
+- checking in C++ Dump module that prints basic attributes of non-epics, 
+  and some basic arrays.
+

@@ -1,0 +1,157 @@
+#!/usr/bin/env python
+
+from __future__ import print_function
+import os
+import sys
+from time import time
+
+from Detector.GlobalUtils import info_command_line_parameters
+from Detector.UtilsEpix10kaCalib import offset_calibration, CALIB_REPO_EPIX10KA, DIR_LOG_AT_START
+import Detector.UtilsLogging as ul
+logger = ul.logging.getLogger(__name__)
+SCRNAME = sys.argv[0].split('/')[-1]
+
+
+def epix10ka_offset_calibration():
+
+    t0_sec = time()
+
+    parser = option_parser()
+    (popts, pargs) = parser.parse_args()
+    args = pargs
+    opts = vars(popts)
+    defs = vars(parser.get_default_values())
+
+    if popts.exp is None : raise IOError('WARNING: option "-e <experiment>" MUST be specified.') # sys.exit()
+    if popts.det is None : raise IOError('WARNING: option "-d <detector-name>" MUST be specified.')
+    if popts.run is None\
+    and popts.runs is None: raise IOError('WARNING: option "-r <run-number> OR -R <runs>" MUST be specified.')
+
+    #ul.logging.basicConfig(format='[%(levelname).1s] L%(lineno)04d: %(message)s', level=ul.DICT_NAME_TO_LEVEL[popts.logmode])
+
+    from Detector.UtilsCalib import RepoManager, cgu
+    import getpass
+    repoman = RepoManager(dirrepo=popts.dirrepo, dir_log_at_start=DIR_LOG_AT_START,\
+                          dirmode=popts.dirmode, filemode=popts.filemode, group=popts.group)
+    logname = repoman.logname('%s_%s' % (SCRNAME, getpass.getuser()))
+    ul.init_logger(loglevel=popts.logmode, logfname=logname, group=popts.group) # fmt='[%(levelname).1s] %(filename)s L%(lineno)04d %(message)s')
+    logger.info('log file: %s' % logname)
+    repoman.save_record_at_start(SCRNAME, adddict={'logfile':logname})
+
+    logger.debug('%s\nIn epix10ka_offset_calibration' % (50*'_'))
+    logger.debug(info_command_line_parameters(parser))
+
+    offset_calibration(*args, **opts)
+
+    os.chmod(logname, popts.filemode)
+    cgu.change_file_ownership(logname, user=None, group=popts.group)
+
+    logger.info('DONE, consumed time %.3f sec' % (time() - t0_sec))
+
+
+def usage(mode=0) :
+    proc_name = os.path.basename(sys.argv[0])
+    if   mode == 1 : return 'Proceses offset run xtc data for epix10ka.'
+    elif mode == 2 : return 'Try: %s -h' % proc_name
+    else : return\
+           '\n%prog -e <experiment> [-d <detector>] [-r <run-number>]'\
+           '\n       [-i <panel-index>] [-n <nspace>] [-x <dsname-or-extension>] [-o <output-result-directory>] [-L <logging-mode>] [-p]'\
+           '\nTEST COMMAND FOR GRAPHICS:'\
+           '\n  %prog -e detdaq18 -d DetLab.0:Epix10ka2M.0 -r52 -i0 -o ./work        # plot all'\
+           '\n  %prog -e detdaq18 -d DetLab.0:Epix10ka2M.0 -r52 -i0 -o ./work -P     # skip pedestal calib-cycles'\
+           '\n  %prog -e detdaq18 -d DetLab.0:Epix10ka2M.0 -r52 -i0 -o ./work -O     # skip offset calib-cycles'\
+           '\n  %prog -e detdaq18 -d DetLab.0:Epix10ka2M.0 -r52 -i0 -o ./work -s 60  # skip first 60 calib-cycles'\
+           '\nDEBUGGING AND REGULAR COMMAND FOR DATA PROCESSING:'\
+           '\n  %prog -e detdaq18 -d DetLab.0:Epix10ka2M.0 -r92 -i0 -o ./work -p'\
+           '\n  %prog -e detdaq18 -d DetLab.0:Epix10ka2M.0 -r52 -i0 -o ./work -p'\
+           '\n  %prog -e detdaq18 -d DetLab.0:Epix10ka2M.0 -r52 -i5 -p &> 2020-06-01-r52-offset-log05.txt&'\
+           '\nDEBUGGING AND REGULAR COMMAND FOR PROCESSING IN BATCH:'\
+           '\n  bsub -o 2020-06-04-r52-offset-log00 -q psanaq %prog -e detdaq18 -d DetLab.0:Epix10ka2M.0 -r52 -i0 -p -o work'\
+           '\n  bsub -o 2020-06-19-r52-offset-log00 -q psanaq %prog -e detdaq18 -d DetLab.0:Epix10ka2M.0 -r52 -i0 -p'
+
+
+def option_parser() :
+    from optparse import OptionParser
+
+    d_exp     = None # 'mfxx32516'
+    d_det     = None # 'NoDetector.0:Epix10ka.3'
+    d_run     = None # 1021 or 1021,1022-1025
+    d_idx     = None # 0-15 for epix10ka2m, 0-3 for epix10kaquad
+    d_nbs     = 4600 # number of frames
+    d_nspace  = 7    # space between charge injected pisels
+    d_dsnamex = None # ':dir=/reg/d/psdm/mfx/mfxx32516/scratch/.../xtc'
+    d_dirrepo = CALIB_REPO_EPIX10KA # './myrepo'
+    d_display = True
+    d_logmode = 'INFO'
+    d_dopeds  = True
+    d_dooffs  = True
+    d_nperiods= False
+    d_ixoff   = 10
+    d_ccnum   = None
+    d_ccmax   = 103
+    d_skipncc = 0
+    d_errskip = False
+    d_savechi2= False
+    d_pixrc   = None
+    d_dirmode  = 0o2775
+    d_filemode = 0o664
+    d_group    = 'ps-users'
+
+    h_exp     = 'experiment name, default = %s' % d_exp
+    h_det     = 'detector name, default = %s' % d_det
+    h_run     = 'run number or list of runs ex. 12,14-18, default = %s' % str(d_run)
+    h_idx     = 'panel index (0-15/3 for epix10ka2m/quad), default = %s' % str(d_idx)
+    h_nbs     = 'number of frames to calibrate offsets, default = %s' % str(d_nbs)
+    h_nspace  = 'space between calibrated pixels, default = %s' % str(d_nspace)
+    h_dsnamex = 'dataset string or xtc file name or extension after exp=<exp>:run=<run> beginning with colon ":", default = %s' % d_dsnamex
+    h_dirrepo = 'repository for calibration results, default = %s' % d_dirrepo
+    h_display = 'turn off graphical display, default = %s' % d_display
+    h_logmode = 'logging mode, one of %s, default = %s' % (ul.STR_LEVEL_NAMES, d_logmode)
+    h_dopeds  = 'do pedestals evaluation, default = %s' % d_dopeds
+    h_dooffs  = 'do offset evaluation, default = %s' % d_dooffs
+    h_nperiods= 'use all found saw periods of the pulser, default = %s' % d_nperiods
+    h_ixoff   = 'discard in fit number of events around switching point, default = %s' % str(d_ixoff)
+    h_ccnum   = 'calibcycle number to process [0,102] or all by default, default = %s' % str(d_ccnum)
+    h_ccmax   = 'maximal number of calib-cycles to process, default = %s' % str(d_ccmax)
+    h_skipncc = 'skip number of first consecutive calibcycles for debugging, default = %s' % str(d_skipncc)
+    h_errskip = 'flag to skip errors and keep processing (stop otherwise), default = %s' % d_errskip
+    h_savechi2= 'save chi2 files, default = %s' % d_savechi2
+    h_pixrc   = 'selected pixel for graphics: comma separated pixel row and colon, ex. 23,234, default = %s' % d_pixrc
+    h_dirmode = 'mode for all mkdir, default = %s' % oct(d_dirmode)
+    h_filemode= 'mode for all saved files, default = %s' % oct(d_filemode)
+    h_group   = 'group ownership for all files, default = %s' % d_group
+
+    parser = OptionParser(description=usage(1), usage = usage())
+    parser.add_option('-e', '--exp',     default=d_exp,     action='store', type='string', help=h_exp)
+    parser.add_option('-d', '--det',     default=d_det,     action='store', type='string', help=h_det)
+    parser.add_option('-r', '--run',     default=d_run,     action='store', type='string', help=h_run)
+    parser.add_option('-i', '--idx',     default=d_idx,     action='store', type='int',    help=h_idx)
+    parser.add_option('-b', '--nbs',     default=d_nbs,     action='store', type='int',    help=h_nbs)
+    parser.add_option('-n', '--nspace',  default=d_nspace,  action='store', type='int',    help=h_nspace)
+    parser.add_option('-x', '--dsnamex', default=d_dsnamex, action='store', type='string', help=h_dsnamex)
+    parser.add_option('-o', '--dirrepo', default=d_dirrepo, action='store', type='string', help=h_dirrepo)
+    parser.add_option('-p', '--display', default=d_display, action='store_false',          help=h_display)
+    parser.add_option('-L', '--logmode', default=d_logmode, action='store', type='string', help=h_logmode)
+    parser.add_option('-P', '--dopeds',  default=d_dopeds,  action='store_false',          help=h_dopeds)
+    parser.add_option('-O', '--dooffs',  default=d_dooffs,  action='store_false',          help=h_dooffs)
+    parser.add_option('-N', '--nperiods',default=d_nperiods,action='store_false',          help=h_nperiods)
+    parser.add_option('-X', '--ixoff',   default=d_ixoff,   action='store', type='int',    help=h_ixoff)
+    parser.add_option('-c', '--ccnum',   default=d_ccnum,   action='store', type='int',    help=h_ccnum)
+    parser.add_option('-m', '--ccmax',   default=d_ccmax,   action='store', type='int',    help=h_ccmax)
+    parser.add_option('-s', '--skipncc', default=d_skipncc, action='store', type='int',    help=h_skipncc)
+    parser.add_option('-E', '--errskip', default=d_errskip, action='store_true',           help=h_errskip)
+    parser.add_option('-C', '--savechi2',default=d_savechi2,action='store_true',           help=h_savechi2)
+    parser.add_option('-G', '--pixrc',   default=d_pixrc,   action='store', type='string', help=h_pixrc)
+    parser.add_option('--dirmode',       default=d_dirmode, action='store', type='int',    help=h_dirmode)
+    parser.add_option('--filemode',      default=d_filemode,action='store', type='int',    help=h_filemode)
+    parser.add_option('--group',         default=d_group,   action='store', type='string', help=h_group)
+
+    return parser
+
+
+if __name__ == "__main__" :
+    if len(sys.argv)==1 : print('\n%s\n' % usage(2))
+    else : epix10ka_offset_calibration()
+    sys.exit(0)
+
+# EOF

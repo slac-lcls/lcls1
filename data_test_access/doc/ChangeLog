@@ -1,0 +1,22 @@
+
+# ChangeLog file for package data_test_access
+# -------------------------------------------
+# New repository data_test_access added to git on 2023-11-20
+
+Tag: V00-00-02
+2024-06-03 Mikhail Dubrovin
+- in src/absolute_path.py add path_to_calibdir
+
+Tag: V00-00-01
+2023-11-20 Mikhail Dubrovin
+- reorganize data_test repository
+- code of data_test repository is isolated from bag data xtc files
+	- data_test will be cloned as /tmp/data_test directory
+	- data_test_access for access and test methods will be kept with psana packages
+modified:   README.md
+new file:   SConscript
+new file:   doc/ChangeLog
+new file:   examples/ex01.py
+new file:   src/absolute_path.py
+
+EOF

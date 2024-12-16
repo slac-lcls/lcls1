@@ -1,0 +1,190 @@
+2024-May-09 ddamiani    Tag V10-01-01.  Added new beammon bld for XRT - HxxDg1BeamMon
+2024-Jan-22 ddamiani    Tag V10-01-00.  Added ConfigV3 for Uxi, ConfigV4 for Jungfrau, and a usb encoder bld for MFX.
+2023-Dec-05 dubrovin    Tag V10-00-00.  Move from svn to github, svn co file:///afs/slac/g/pcds/svn/pdsdata/tags/V09-04-00 pdsdata
+2023-Oct-07 ddamiani    Tag V09-04-00.  Added ConfigV2 for Uxi.
+2021-Dec-12 ddamiani    Tag V09-03-04.  Fixed bug with 64bit bitfield in timetool ConfigV3.
+2021-Dec-07 ddamiani    Tag V09-03-03.  Fixed bug in one of the constructors of ConfigV3 for timetool and pvname.
+2021-Dec-07 ddamiani    Tag V09-03-02.  Added ConfigV3 and DataV3 for timetool.
+2021-Sep-14 ddamiani    Tag V09-03-01.  Fixed enumeration values roi field in AlviumConfigV1.
+2021-Sep-12 ddamiani    Tag V09-03-00.  Added AlviumConfigV1 and VimbaFrameV1.
+2021-Apr-28 ddamiani    Tag V09-02-01.  Added Config10kaV2, Config10ka2MV2, and Config10kaQuadV2.
+2021-Mar-25 ddamiani    Tag V09-02-00.  Added ConfigV4 for ControlData and BldDataPhaseCavityV1.
+2021-Mar-18 ddamiani    Tag V09-01-01.  Add DetInfo device type for QuadAdc.
+2020-Sep-30 ddamiani    Tag V09-01-00.  Added ConfigV1 for the Andor iStar sCMOS detector.
+2020-Sep-24 ddamiani    Tag V09-00-04.  Add additional Wave8 bld and fixed int overflow in shared memory server/client.
+2020-May-16 ddamiani    Tag V09-00-03.  Improvements to SegmentInfo.
+2020-Feb-12 ddamiani    Tag V09-00-02.  Add SegmentInfo for dealing with detectors made of several segments.
+2020-Feb-06 ddamiani    Tag V09-00-01.  Fix constructor of Jungfrau ElementV2 plus fix bug in xtcreader.
+2020-Jan-31 ddamiani    Tag V09-00-00.  Removed SegmentConfigV1 for the Jungfrau and added < operator for DetInfo.
+2020-Jan-29 ddamiani    Tag V08-09-13.  Add SegmentConfigV1 for the Jungfrau.
+2019-Jul-16 ddamiani    Tag V08-09-12.  Add JungfrauQuad to DetInfo Device enum.
+2019-Apr-22 ddamiani    Tag V08-09-11.  Add ConfigV4 for the Archon (RIXS) detector.
+2018-Nov-07 weaver      Tag V08-09-10.  Added Epix10ka Quad and 2M support.
+2018-Oct-26 ddamiani    Tag V08-09-08.  Added helper functions for getting the Rayonix shape.
+2018-Oct-25 ddamiani    Tag V08-09-07.  Add ConfigV1 for the C7700 streak camera.
+2018-Oct-13 ddamiani    Tag V08-09-06.  Add ConfigV3 for the Archon (RIXS) detector.
+2018-Oct-11 weaver      Tag V08-09-05.  Add support for epix10ka2m.
+2018-Oct-10 ddamiani    Tag V08-09-04.  Add ConfigV2 for the Archon (RIXS) detector.
+2018-Sep-27 ddamiani    Tag V08-09-03.  Added a potIsTuned helper method to the ConfigV1 of the UXI.
+2018-Sep-25 ddamiani    Tag V08-09-02.  Fixed a bug with the potIsReadOnly method of the ConfigV1 of the UXI.
+2018-Sep-23 ddamiani    Tag V08-09-01.  Add ConfigV1 and FrameV1 for the UXI detector.
+2018-Aug-27 ddamiani    Tag V08-09-00.  Add ConfigV1 and FrameV1 for the Pixis detector.
+2018-Aug-22 ddamiani    Tag V08-08-06.  Add Beammon bld for MEC.
+2018-Jul-06 ddamiani    Tag V08-08-05.  Add analog input bld for the FEE.
+2017-Dec-11 ddamiani    Tag V08-08-04.  Add analog input bld for MEC.
+2017-Dec-05 ddamiani    Tag V08-08-03.  Add Asic10kaConfigV1 and Config10kaV1 for the Epix10ka detector.
+2017-Nov-09 ddamiani    Tag V08-08-02.  Add ModuleConfigV1 and ConfigV3 for the Jungfrau detector from PSI.
+2017-Sep-01 ddamiani    Tag V08-08-01.  Add ElementV2 and ModuleInfoV1 for the Jungfrau detector from PSI plus some new BLD ids.
+2017-Aug-11 ddamiani    Tag V08-08-00.  Removed 'using namespace Pds' from header file of the XtcIterator class.
+2017-Jun-21 ddamiani    Tag V08-07-05.  Added entries in BldInfo for controls usdusb4 encoder boxes.
+2017-Jun-02 ddamiani    Tag V08-07-04.  Added ConfigV1 and FrameV1 for the Andor Zyla CMOS camera.
+2017-Mar-14 ddamiani    Tag V08-07-03.  Updated QuadAdc ConfigV1 so it is tagged as a config type - fix for psana.
+2017-Mar-14 ddamiani    Tag V08-07-02.  Added ConfigV2 for the PSI Jungfrau detector and ConfigV1 for the QuadAdc.
+2017-Jan-10 ddamiani    Tag V08-07-01.  Added DetLab to DetInfo Detector enum.
+2016-Dec-16 ddamiani    Tag V08-07-00.  Added ConfigV1 and ElementV1 for the PSI Jungfrau detector.
+2016-Dec-07 ddamiani    Tag V08-06-19.  Added BLD for the HX2 beam monitor and devel ConfigV1 for the Archon controller.
+2016-Oct-31 ddamiani    Tag V08-06-18.  Added analog input bld for SXR. Added new ControlsCameraConfigV1 ddl type for IOC cameras.
+2016-Oct-17 ddamiani    Tag V08-06-17.  Fix bug in BldDataBeamMonitorV1 so it reflects the actual recorded data
+2016-Sep-30 ddamiani    Tag V08-06-16.  Update BldDataBeamMonitor type to be BldDataBeamMonitorV1.
+2016-Sep-27 ddamiani    Tag V08-06-15.  Added BldDataUsdUsbV1 for shared UsdUsb encoder boxes and minor fixes for BldDataBeamMonitor type.
+2016-Jun-14 ddamiani    Tag V08-06-13.  Adds entries in BldInfo for the new spectrometer bld for the profile monitor cameras in MFX.
+2016-Jun-10 ddamiani    Tag V08-06-12.  Fix Partition::ConfigV2 so that helper methods can be used on bits higher than 255.
+2016-Jun-09 ddamiani    Tag V08-06-11.  Added Partition::ConfigV2 to support bld masks with an arbitrary number of bits.
+2016-Jun-02 ddamiani    Tag V08-06-10.  Fix for BldDataEOrbitsV0 which removes the value_type tag from the ddl.
+2016-May-23 ddamiani    Tag V08-06-09.  Added BldDataEOrbitsV0 electron beam orbit parameters.
+2016-Apr-15 ddamiani    Tag V08-06-08.  Added a ConfigV2 for the Andor cameras with support of crop mode.
+2016-Mar-31 ddamiani    Tag V08-06-06.  Added a LeCroy type to DetInfo.
+2016-Mar-29 ddamiani    Tag V08-06-05.  Added a constructor to Generic1D::DataV0.
+2016-Mar-28 ddamiani    Tag V08-06-04.  Fixed a bug with string names of the Generic1DConfig and Generic1DData types.
+2016-Mar-28 ddamiani    Tag V08-06-03.  Added FexConfigV1 and FexDataV1 for usdusb encoders. Derived from psddldata V01-00-38.
+2016-Feb-05 ddamiani    Tag V08-06-01.  Fixed bug with TypeId and DetInfo for multi-ccd Andor cameras. Derived from psddldata V01-00-36.
+2016-Feb-04 ddamiani    Tag V08-06-00.  Added ConfigV1 and FrameV1 for multi-ccd Andor cameras. Derived from psddldata V01-00-36.
+2015-Apr-30 ddamiani    Tag V08-02-07.  Added BldDataAnalogInputV1. Derived from psddldata V01-00-27.
+2015-Mar-03 caf         Tag V08-02-06.  Fix bug that prevented indexer from recognizing EvrData::DataV4.
+2015-Feb-26 weaver	Tag V08-02-05.  Change XtcMonitorServer to reject connections from extra clients.
+2015-Feb-20 caf         Tag V08-02-04.  Adds EvrData::DataV4.  Derived from psddldata V01-00-26.
+2014-Nov-25 cpo		Tag V08-01-11.  Add const accessor to IndexList.hh to allow software to convert eventcode-bits to actual event-codes.
+2014-Nov-25 weaver	Tag V08-01-10.  Added Quartz::ConfigV2 for hw ROI.
+2014-Nov-18 weaver	Tag V08-01-09.  Added TimeTool::ConfigV2,DataV2.  Fix to XtcMonitorServer for slow clients.
+2014-Oct-14 weaver	Tag V08-01-07.  Added BldDataSpectrometerV1.
+2014-Oct-13 weaver	Tag V08-01-06.  Added Epix100a, built with ddl 'devel' tag.
+2014-Oct-05 jana	Tag V08-01-05.  Adds some XCS BLD IPIMBs to BldInfo and latest changes to epix.ddl excluding epix100a and elementV2.  Derived from psddldata V01-00-16.
+2014-Oct-01 weaver      Tag V08-01-04.  Adds EvrData::IOConfigV2.  Derived from psddldata V01-00-15.
+			Tag V08-01-03.  Adds TimeTool::DataV1.
+2014-Sep-15 weaver	Tag V08-01-02.  Derived from psddldata V01-00-13.  Adds TimeTool config and GenericPgp config types.
+					Adds L3T::DataV2 type with unbiased selection flag, also in L1AcceptEnv.
+2014-Sep-08 cpo 	Tag V08-01-01.  Tomy and Chris move pragma-pack in index/IndexList.hh
+                                        to avoid bug in std:map<int,int> that caused
+                                        cctbx crystallography software to crash
+2014-Aug-13 weaver	Tag V08-01-00.  Change to L3TModule interface to supply configuration information.
+2014-Jul-31 weaver	Updated xtcmonserver to cleanup message queues.
+2014-Jul-03 jana	Tag V08-00-12	Added support for ebeam BLD v6 to app/*reader.cc.  Uses psddldata V01-00-12.
+2014-Jun-30 cpo		Tag V08-00-11.  Added 3 photon-energy related doubles to ebeam bld.  uses psddldata v01-00-11.
+2014-Jun-27 weaver	Tag V08-00-10.  Fixed XtcMonitorServer extra buffer recovery for retiring clients.
+					Removed all potential mq_send blocks.
+2014-Jun-13 jana        Tag V08-00-09.  Added 2 PMT quantities to Gas Detector BLD data type
+	                                Modified bldreader, cfgreader, xtcreader appropriately.
+					Uses psddldata tag V01-00-10
+2014-May-29 weaver	Tag V08-00-08.  Changed XtcMonitorClient behavior to use event queue passed by server.
+					Changed XtcMonitorServer to recover buffers in use by terminating clients.
+2014-May-12 weaver	Tag V08-00-07.  Fix to use nonblocking message queue receive in XtcMonitorServer.cc.
+2014-May-08 tomy        Tag V08-00-06.  Add BldDataGMDV2
+2014-Apr-03 cpo         Tag V08-00-02.  Add 64-bit time accessors for psana indexing.
+2014-Mar-26 cpo		Tag V08-00-01.  Workaround for what I believe is a compiler bug when compiling
+                                        indexing with x86_64-opt (works with x86_64-dbg).
+2014-Mar-26 cpo		Tag V07-02-23.  Add const accessor methods to index to
+                                        allow for psana-indexing.
+2014-Jan-07 salnikov	Tag V07-02-15.  Derived from psddldata tag V01-00-01 and psddl V00-13-02.
+                                        Changed storage type for enum in Acqiris::TdcChannel class, interface did not change.
+2013-Dec-22 salnikov	Tag V07-02-14.  Derived from psddldata tag V01-00-00 and psddl V00-13-00.
+                                        Switching from XML-DDL to new DDL, psddl/package.mk updated, generated code should be identical except for formatting.  
+2013-Dec-22 salnikov	Tag V07-02-13.  Derived from psddldata tag V00-04-57 and psddl V00-12-14.
+                                        Method Acqiris::TdcDataV1::data() now requires an argument which defines the size of the returned array.
+2013-Dec-12 salnikov	Tag V07-02-11.  Derived from psddldata tag V00-04-55 and psddl V00-12-09.  Fixing bug in DDL definition of Ipimb::ConfigV1::capacitorValues(),
+                                        Small changes in Andor config class to support HDF5 schema. Removed unnecessary methods from couple of EVR classes.
+2013-Dec-12 salnikov	Tag V07-02-10.  Derived from psddldata tag V00-04-53 and psddl V00-12-09.  Generating implementation of EpixSampler::ConfigV1::sampleInterval_sec().
+2013-Nov-12 salnikov	Tag V07-02-07.  Derived from psddldata tag V00-04-47 and psddl V00-12-04.  Added capacitorValues method to ipimb Config types.
+2013-Sep-20 weaver	Tag V07-00-03.  Derived from psddldata tag V00-04-37 and psddl V00-08-14.  Added BldAcqADCV1 and TimePix::DataV2(DataV1&) ctor.
+2013-Sep-18 weaver	Tag V07-00-02.  Derived from psddldata tag V00-04-35.  Moved xtc/SrcAlias to psddl/alias.ddl.h.
+2013-Sep-16 weaver	Tag V07-00-01.  Derived from psddldata tag V00-04-33.
+2012-Dec-21 caf         Added Timepix Config V3.
+2012-Apr-03 tomytsai    Added Ocean Optics spectrometer and EpicsConfig
+2012-Jan-05 caf         Added Timepix detector.
+2011-Nov-08 caf     Tag V03-00-01   Modified some data types for portability.
+2011-Nov-02 caf     Tag V03-00-00.
+2011-Oct-03 caf         Added Gsc16ai detector.
+2011-Sep-27 caf         New xtcmodify feature: "-s <selectpayloadname>" requests one payoad name
+          to be written to output file.
+2011-Sep-26 jackp     Added Fexamp detector
+2011-Sep-07 weaver  Tag V02-13-09   XtcMonitorClient retries all message queue opens - removed race with XtcMonitorServer.
+          Added Cspad2x2.
+2011-Aug-09 weaver      Added BldDataPimV1.
+2011-July-20  weaver  Tag V02-12-00 Added XRT BLD cameras.
+2011-May-31 weaver  Tag V02-11-01 Added BldDataEbeamV2.
+2011-May-12 weaver      Added Lusi Config V2s to match Ipimb upgrade.
+2011-Apr-04 weaver      Added postmarks to mq_send calls from XtcMonitorServer to allow
+          recovery of shared memory buffers lost to non-responsive clients.
+2010-Dec-17 weaver  Tag V02-10-02 Added new acqiris/Tdc data types.
+2010-Dec-09 tomy    Modified xtc/Detinfo.hh and xtc/src/DetInfo.cc to add CXI detector IDs.
+2010-Nov-30 weaver  Tag V02-10-00.  Added evr/ConfigV5 and evr/SequencerConfigV1.
+2010-Nov-02     caf     Tag V02-08-05.
+2010-Sep-20 weaver  Tag V02-08-00.  Added Cspad ElementIterator and Config/ElementV2.
+2010-Sep-1  weaver  Tag V02-07-00.  Cspad definitions are stable now.
+2010-Aug-10 weaver  Tag V02-06-00.  Added LUSI diagnostic FEX data and config types.
+2010-Jun-24 weaver      Added Cspad preliminary definitions.
+2010-Jun-15 weaver  Tag V02-04-00.  Added value method to encoder/DataV1.  Added pulnix/TM6740ConfigV2, fccd/FccdConfigV2.
+2010-Jun-06 weaver  Tag V02-02-00.  Added some XPP DetInfo entries.  Added TM6740 to xtcreader.
+2010-May-18 weaver      Added evr/IOConfigV1 class for describing EVR IO cabling.
+2010-Apr30  weaver  Tag V02-00-00.  Changed XtcMonitorServer and XtcMonitorClient to allow multiple clients to
+          receive events in parallel or serialized (daisy-chained).
+2010-Apr14  weaver      Created app/XtcMonitorServer for use by online and offline shared memory servers.
+2010-Apr5       jbt                     Removed SxrSpectrometer from DetInfo.hh - never used, never will be.
+2010-Apr2       jbt                     Added Encoder to DetInfo Detector enum.
+2010-Mar13      cpo                     Switch from -1 to the max() function in <limits> for "largest 
+                                        integer".  Also add in Tomy's new event code sequencing
+                                        classes in evr.
+2009-Dec14      cpo                     Tag V01-08-00 for Matt's scan data.
+2009-Nov22      cpo                     Tag V01-07-00 for pnCCD objects for Andy.
+2009-Nov11  weaver      Tag V01-06-00.  Added BldEb to DetInfo.  Added bld BldDataEbeamV0,1.
+2009-Nov05      cpo                     Support for pnCCD data (Config and Frame objects).
+2009-Nov05  weaver      Added Damage bit ContainsIncomplete to indicate when an
+          IncompleteContribution may be found within.
+2009-Nov03  weaver      Add simple apps app/bldreader,dmgreader.
+2009-Oct30  cpo Tag V01-05-02.  Put in pragma pack(4) in PVControl.hh and PVMonitor.hh as suggested by Andy.
+2009-Oct28  cpo Tag V01-05-01.  Put back support for x86_64 in packages.mk.
+                                        Put in pragma pack(4) in bldData.hh.
+2009-Oct27  cpo Tag V01-05-00.  Tomy added phase cavity support.
+2009-Oct08  weaver  Tag V01-04-00.  Added EvrConfig_V2 for opcode support.
+2009-Sep21      tomytsai    Add xtc support for EBeam bld
+2009-Sep14      tomytsai    Add Epics data parsing in app/xtcreader.cc
+2009-Aug27      tomytsai    Add 1. epics xtc data reading library under pdsdata/epics 2. xtc reader sample program in pdsdata/app and change xtc typeid changes for epics and bld data
+2009-Aug24      cpo                     Add Matt's BldInfo classes and put it TypeId for the FEE GasDet.
+    weaver      Add missing transitions {Map,Unconfigure,Unmap} into xtcmonserver.
+2009-Aug15  weaver  Tag V00-05-03.  Applied Bozek's detector name changes.
+          Added master EVG fiducial count details.
+2009-Aug12  weaver  Tag V00-05-02.  Tagged for production release.
+2009-Jul22  weaver  Tag V00-05-01.  Modified RunControl configuration data.
+          Added EVR vectoring field to TimeStamp.
+2009-Jul17  jackp     Added pnCCD support and made strings match enums
+2009-Jul16      cpo                     Put CAMP stuff in DetInfo enums.
+2009-Jul-14 weaver  Tag V00-05-00.  Added run control configuration classes.  Removed
+          Pause/Resume and added Begin/EndCalibCycle transitions.
+          Changed ClockTime default ctor to not zero memory.
+2009-Jul-10     cpo                     Improvements to acqiris configuration classes.
+2009-Jun-01 weaver  Tag V00-04-00.  Tagged Amedeo's changes to xtc/Sequence.
+2009-Apr-16 weaver      Added pulnix directory and its configuration data type.
+          Added out-of-order damage type.
+2009-Apr-10     cpo                     Change Acqiris waveform() to return
+                                        int16 instead of uint16.  Add method
+                                        to get index of first valid point.
+2009-Mar-31 weaver  Tag V00-03-00.  Interface changes require version change.
+2009-Mar-31 weaver  Tag V00-02-05.  Removed TypeId(unsigned) ctor which ignored versions.  Added TwoDGaussianV1.hh.
+2009-Mar-24     cpo     Tag V00-02-04.  Add xtcreader to new app directory.
+2009-Mar-24     cpo     Tag V00-02-03.  Removed WaveformV1.hh and AcqDataDescV1.* and DataCallback.hh.
+          Added acqiris bit field locations in DataDescV1.hh.
+2009-Mar-24     cpo     Tag V00-02-01.  Improved acqiris data support.
+2009-Mar-04 weaver  Tag V00-02-00.  Added camera, evr, opal1k data formats.
+
+2009-Feb-13     cpo     Add outofsynch damage bit.
+
+2008-Nov-14     cpo     Tag V00-01-00.  First version to support offline.

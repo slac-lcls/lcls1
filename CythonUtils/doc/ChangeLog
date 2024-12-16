@@ -1,0 +1,18 @@
+#--------------------------------------------------------------------------
+# File and Version Information:
+#  $Id: ChangeLog 11740 2016-04-21 00:54:04Z cpo@SLAC.STANFORD.EDU $
+#
+# Description:
+#  ChangeLog file for package CythonUtils
+#------------------------------------------------------------------------
+
+Package author: Christopher O'Grady
+
+Please describe any modifications that you made to the package in the
+reverse time order.
+
+=======
+
+Tag: V00-00-01
+2016-04-22 Christopher O'Grady
+- initial commit with nonlinear correction code for oceanoptics spectrometer

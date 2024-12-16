@@ -1,0 +1,154 @@
+#!/usr/bin/env python
+
+import os
+import sys
+import Detector.UtilsLogging as ul
+logger = ul.logging.getLogger(__name__)
+from Detector.UtilsJungfrauCalib import jungfrau_dark_proc, CALIB_REPO_JUNGFRAU, DIR_LOG_AT_START, uc, gu
+from data_test_access.absolute_path import path_to_xtc_test_file
+PATH_TO_XTC = path_to_xtc_test_file(fname='data-xppl1001021-r0023-3events-jungfrau1m.xtc')
+SCRNAME = sys.argv[0].split('/')[-1]
+
+DESCRIPTION = 'Proceses jungfrau dark data'
+
+USAGE ='\n%s -d <dataset> -s <source> ...' % SCRNAME\
+      +'\nEx.1:  %s -d exp=cxilu9218:run=242,243,244:smd -s CxiDs1.0:Jungfrau.0 # regular dark processing' % SCRNAME\
+      +'\nEx.2:  %s -d exp=cxilu9218:run=242,243,244:smd -s CxiDs1.0:Jungfrau.0 -I1 # speed-up for single panel' % SCRNAME\
+      +'\nEx.3:  %s -d exp=cxilu9218:run=238:smd -s CxiDs1.0:Jungfrau.0 --evcode 162 # use drop-shots as dark events' % SCRNAME\
+      +'\nEx.4:  %s -d exp=cxic00318:run=375:smd -s CxiDs1.0:Jungfrau.0 --nrecs1=50 --nrecs=100 -o work # test bad gain switch 221,228,224 sec' % SCRNAME\
+      +'\nEx.5:  %s -d %s -s XppEndstation.0:Jungfrau.0 --nrecs 3 --nrecs1 2 -o work --expname xppl1001021# for unittest' % (SCRNAME, PATH_TO_XTC)\
+      +'\n\nHelp:  %s -h\n' % SCRNAME
+
+
+if len(sys.argv)<2:
+    print('%s\n%s\n%s' % (40*'_', DESCRIPTION, USAGE))
+    sys.exit('MISSING COMMAND LINE PARAMETERS')
+
+
+def option_parser():
+    from optparse import OptionParser
+    d_dirrepo= CALIB_REPO_JUNGFRAU # './panels' '/reg/g/psdm/detector/gains/jungfrau/panels'
+    d_dsname = None # 'exp=cxi11216:run=9,12,13:smd' # None
+    d_source = None #'CxiEndstation.0:Jungfrau.0' # None
+    d_events = 100000
+    d_evskip = 0
+    d_evstep = 2000
+    d_int_lo = 1
+    d_int_hi = 16000
+    d_intnlo = 6.0
+    d_intnhi = 6.0
+    d_rms_lo = 0.001
+    d_rms_hi = 16000
+    d_rmsnlo = 6.0
+    d_rmsnhi = 6.0
+    d_fraclm = 0.1
+    d_plotim = 0
+    d_evcode = None
+    d_upload = False
+    d_stepnum= None
+    d_stepmax= None
+    d_segind = None
+    d_nrecs1 = 50
+    d_nrecs  = 1000
+    d_fraclo = 0.05    # fraction of statistics [0,1] below low limit
+    d_frachi = 0.95    # fraction of statistics [0,1] below high limit
+    d_logmode = 'INFO'
+    d_dirmode  = 0o2775
+    d_filemode = 0o664
+    d_group    = 'ps-users'
+    d_expname  = None # 'mfxx32516'
+
+    h_dsname='dataset name, default = %s' % d_dsname
+    h_source='input ndarray source name, default = %s' % d_source
+    h_events='maximal number of events total (in runs, steps), default = %s' % d_events
+    h_evskip='number of events to skip in the beginning of each step, default = %s' % d_evskip
+    h_evstep='maximal number of events to process in each step, default = %s' % d_evstep
+    h_int_lo='intensity low limit, default = %s' % d_int_lo
+    h_int_hi='intensity high limit, default = %s' % d_int_hi
+    h_intnlo='number of sigma from mean for low limit on INTENSITY, default = %s' % d_intnlo
+    h_intnhi='number of sigma from mean for high limit on INTENSITY, default = %s' % d_intnhi
+    h_rms_lo='rms low limit, default = %s' % d_rms_lo
+    h_rms_hi='rms high limit, default = %s' % d_rms_hi
+    h_rmsnlo='number of sigma from mean for low limit on RMS, default = %s' % d_rmsnlo
+    h_rmsnhi='number of sigma from mean for high limit on RMS, default = %s' % d_rmsnhi
+    h_fraclm='allowed fraction [0,1] limit, default = %s' % d_fraclm
+    h_plotim='control bit-word to plot images, default = %s' % d_plotim
+    h_evcode='comma separated event codes for selection as OR combination, any negative %s'%\
+             'code inverts selection, default = %s'%str(d_evcode)
+    h_upload='deprecated and not used, default = %s' % d_upload
+    h_stepnum ='step/calibcycle number [0,2] or all by default, default = %s' % str(d_stepnum)
+    h_stepmax ='maximal number of steps or all by default, default = %s' % str(d_stepmax)
+    h_segind ='segment index to process, default = %s' % str(d_segind)
+    h_nrecs ='number of records to collect data, default = %s' % str(d_nrecs)
+    h_nrecs1='number of records for 1st stage processing, default = %s' % str(d_nrecs1)
+    h_fraclo= 'fraction of statistics [0,1] below low  limit of the gate, default = %f' % d_fraclo
+    h_frachi= 'fraction of statistics [0,1] below high limit of the gate, default = %f' % d_frachi
+    h_dirrepo = 'repository for calibration results, default = %s' % d_dirrepo
+    h_logmode = 'logging mode, one of %s, default = %s' % (ul.STR_LEVEL_NAMES, d_logmode)
+    h_dirmode = 'mode for all mkdir, default = %s' % oct(d_dirmode)
+    h_filemode= 'mode for all saved files, default = %s' % oct(d_filemode)
+    h_group   = 'group ownership for all files, default = %s' % d_group
+    #h_savebw='control bit-word to save arrays: 1/2/4/8/16/32/...'\
+    #         ' - ave/rms/status/mask/max/min/sta_int_lo/sta_int_hi, default = (oct) %s' % oct(d_savebw)
+    h_expname = 'experiment name for info in case of local xtc file, default = %s' % d_expname
+
+    parser = OptionParser(description=DESCRIPTION, usage = USAGE)
+    parser.add_option('-d', '--dsname', dest='dsname', default=d_dsname, action='store', type='string', help=h_dsname)
+    parser.add_option('-s', '--source', dest='source', default=d_source, action='store', type='string', help=h_source)
+    parser.add_option('-n', '--events', dest='events', default=d_events, action='store', type='int',    help=h_events)
+    parser.add_option('-m', '--evskip', dest='evskip', default=d_evskip, action='store', type='int',    help=h_evskip)
+    parser.add_option('-e', '--evstep', dest='evstep', default=d_evstep, action='store', type='int',    help=h_evstep)
+    parser.add_option('-b', '--int_lo', dest='int_lo', default=d_int_lo, action='store', type='float',  help=h_int_lo)
+    parser.add_option('-t', '--int_hi', dest='int_hi', default=d_int_hi, action='store', type='float',  help=h_int_hi)
+    parser.add_option('-B', '--rms_lo', dest='rms_lo', default=d_rms_lo, action='store', type='float',  help=h_rms_lo)
+    parser.add_option('-T', '--rms_hi', dest='rms_hi', default=d_rms_hi, action='store', type='float',  help=h_rms_hi)
+    parser.add_option('-F', '--fraclm', dest='fraclm', default=d_fraclm, action='store', type='float',  help=h_fraclm)
+    parser.add_option('-p', '--plotim', dest='plotim', default=d_plotim, action='store', type='int',    help=h_plotim)
+    parser.add_option('-D', '--intnlo', dest='intnlo', default=d_intnlo, action='store', type='float',  help=h_intnlo)
+    parser.add_option('-U', '--intnhi', dest='intnhi', default=d_intnhi, action='store', type='float',  help=h_intnhi)
+    parser.add_option('-L', '--rmsnlo', dest='rmsnlo', default=d_rmsnlo, action='store', type='float',  help=h_rmsnlo)
+    parser.add_option('-H', '--rmsnhi', dest='rmsnhi', default=d_rmsnhi, action='store', type='float',  help=h_rmsnhi)
+    parser.add_option('-c', '--evcode', dest='evcode', default=d_evcode, action='store', type='string', help=h_evcode)
+    parser.add_option('-u', '--upload', dest='upload', default=d_upload, action='store_true',           help=h_upload)
+    parser.add_option('-N', '--stepnum',dest='stepnum',default=d_stepnum,action='store', type='int',    help=h_stepnum)
+    parser.add_option('-M', '--stepmax',dest='stepmax',default=d_stepmax,action='store', type='int',    help=h_stepmax)
+    parser.add_option('-I', '--segind', dest='segind', default=d_segind, action='store', type='int',    help=h_segind)
+    parser.add_option('--nrecs',        dest='nrecs',  default=d_nrecs,  action='store', type='int',    help=h_nrecs)
+    parser.add_option('--nrecs1',       dest='nrecs1', default=d_nrecs1, action='store', type='int',    help=h_nrecs1)
+    parser.add_option('--fraclo',       dest='fraclo', default=d_fraclo, action='store', type='float',  help=h_fraclo)
+    parser.add_option('--frachi',       dest='frachi', default=d_frachi, action='store', type='float',  help=h_frachi)
+    parser.add_option('-o', '--dirrepo',dest='dirrepo',default=d_dirrepo,action='store', type='string', help=h_dirrepo)
+    parser.add_option('--logmode',      dest='logmode',default=d_logmode,action='store', type='string', help=h_logmode)
+    parser.add_option('--dirmode',      default=d_dirmode, action='store', type='int',    help=h_dirmode)
+    parser.add_option('--filemode',     default=d_filemode,action='store', type='int',    help=h_filemode)
+    parser.add_option('--group',        default=d_group,   action='store', type='string', help=h_group)
+    parser.add_option('--expname',      default=d_expname, action='store', type='string', help=h_expname)
+    #parser.add_option('-S', '--savebw', dest='savebw', default=d_savebw, action='store', type='int',    help=h_savebw)
+
+    return parser
+
+
+if __name__ == "__main__":
+
+    parser = option_parser()
+    (popts, pargs) = parser.parse_args()
+
+    repoman = uc.RepoManager(dirrepo=popts.dirrepo, dir_log_at_start=DIR_LOG_AT_START,\
+                             dirmode=popts.dirmode, filemode=popts.filemode, group=popts.group)
+    logname = repoman.logname('%s_%s' % (SCRNAME, gu.get_login()))
+    ul.init_logger(loglevel=popts.logmode, logfname=logname, group=popts.group) # fmt='[%(levelname).1s] %(filename)s L%(lineno)04d %(message)s')
+    logger.info('log file: %s' % logname)
+    if popts.dirrepo != 'work':
+        repoman.save_record_at_start(SCRNAME, adddict={'logfile':logname})
+
+    from Detector.GlobalUtils import info_command_line_parameters
+    logger.info(info_command_line_parameters(parser))
+    popts.repoman = repoman
+    jungfrau_dark_proc(pargs, popts)
+
+    os.chmod(logname, popts.filemode)
+    uc.cgu.change_file_ownership(logname, user=None, group=popts.group)
+
+    sys.exit(0)
+
+# EOF

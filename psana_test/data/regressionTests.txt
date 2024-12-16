@@ -1,0 +1,34 @@
+# define regression tests for single xtc files. 
+test=000  events=006 doNotDumpEpicsAliases=1 xtc=/reg/g/psdm/data_test/Translator/test_000_amo_amo01509_e8-r0125-s00-c00.xtc
+test=002  events=006 doNotDumpEpicsAliases=1 xtc=/reg/g/psdm/data_test/Translator/test_002_amo_amo75113_e272-r0156-s00-c00.xtc
+test=004  events=006 doNotDumpEpicsAliases=1 xtc=/reg/g/psdm/data_test/Translator/test_004_amo_amoi0010_e48-r0056-s00-c00.xtc
+test=012  events=006 doNotDumpEpicsAliases=1 xtc=/reg/g/psdm/data_test/Translator/test_012_dia_diaxpp13_e311-r0031-s00-c00.xtc
+test=017  events=006 doNotDumpEpicsAliases=1 xtc=/reg/g/psdm/data_test/Translator/test_017_mec_meca6113_e332-r0062-s03-c00.xtc
+test=019  events=006 doNotDumpEpicsAliases=1 xtc=/reg/g/psdm/data_test/Translator/test_019_sxr_sxr16410_e75-r0105-s00-c00.xtc
+test=020  events=006 doNotDumpEpicsAliases=1 xtc=/reg/g/psdm/data_test/Translator/test_020_sxr_sxr33211_e103-r0845-s00-c00.xtc
+test=022  events=006 doNotDumpEpicsAliases=1 xtc=/reg/g/psdm/data_test/Translator/test_022_sxr_sxr63212_e208-r0020-s00-c00.xtc
+test=026  events=006 doNotDumpEpicsAliases=1 xtc=/reg/g/psdm/data_test/Translator/test_026_xcs_xcs84213_e360-r0239-s00-c00.xtc
+test=028  events=006 doNotDumpEpicsAliases=1 xtc=/reg/g/psdm/data_test/Translator/test_028_xcs_xcsi0113_e289-r0030-s00-c00.xtc
+test=029  events=006 doNotDumpEpicsAliases=1 xtc=/reg/g/psdm/data_test/Translator/test_029_xcs_xcsi0213_e323-r0048-s05-c00.xtc
+test=031  events=006 doNotDumpEpicsAliases=1 xtc=/reg/g/psdm/data_test/Translator/test_031_xpp_xpp63412_e209-r0100-s01-c00.xtc
+test=032  events=006 doNotDumpEpicsAliases=1 xtc=/reg/g/psdm/data_test/Translator/test_032_xpp_xppcom10_e40-r0613-s00-c00.xtc
+test=037  events=006 doNotDumpEpicsAliases=1 xtc=/reg/g/psdm/data_test/Translator/test_037_xpp_xppi0913_e380-r0017-s00-c00.xtc
+test=052  events=006 doNotDumpEpicsAliases=1 xtc=/reg/g/psdm/data_test/Translator/test_052_mob_mob30114_e459-r0145-s00-c00.xtc
+test=053  events=006 doNotDumpEpicsAliases=1 xtc=/reg/g/psdm/data_test/Translator/test_053_xpp_xppd9714_e428-r0162-s02-c00.xtc
+test=054  events=006 doNotDumpEpicsAliases=1 xtc=/reg/g/psdm/data_test/Translator/test_054_amo_amob5114_e410-r0549-s01-c00.xtc
+test=055  events=006 doNotDumpEpicsAliases=1 xtc=/reg/g/psdm/data_test/Translator/test_055_xpp_xppe0614_e422-r0469-s04-c00.xtc
+test=058  events=006 doNotDumpEpicsAliases=1 xtc=/reg/g/psdm/data_test/Translator/test_058_amo_amo01809_e5-r0102-s00-c00.xtc
+test=059  events=006 doNotDumpEpicsAliases=1 xtc=/reg/g/psdm/data_test/Translator/test_059_sxr_sxrd5114_e429-r0069-s04-c00.xtc
+test=060  events=006 doNotDumpEpicsAliases=1 xtc=/reg/g/psdm/data_test/Translator/test_060_sxr_sxr27211_e100-r0035-s00-c00.xtc
+test=061  events=006 doNotDumpEpicsAliases=1 xtc=/reg/g/psdm/data_test/Translator/test_061_mob_mob10114_e394-r0061-s00-c00.xtc
+test=069  events=006 doNotDumpEpicsAliases=1 xtc=/reg/g/psdm/data_test/Translator/test_069_mec_meca2614_e358-r0113-s01-c00.xtc
+test=076  events=006 doNotDumpEpicsAliases=1 xtc=/reg/g/psdm/data_test/Translator/test_076_dia_diasxr13_e310-r0003-s00-c00.xtc
+test=082  events=006 doNotDumpEpicsAliases=1 xtc=/reg/g/psdm/data_test/Translator/test_082_mec_mecd6714_e441-r0009-s00-c00.xtc
+test=085  events=010 doNotDumpEpicsAliases=1 xtc=/reg/g/psdm/data_test/Translator/test_085_timetool_no_proj.xtc
+test=086  events=010 doNotDumpEpicsAliases=1 xtc=/reg/g/psdm/data_test/Translator/test_086_timetool_one_proj.xtc
+test=087  events=010 doNotDumpEpicsAliases=1 xtc=/reg/g/psdm/data_test/Translator/test_087_timetool_two_proj.xtc
+
+# define regression tests for multi file datasets. 
+test=000  events=000 doNotDumpEpicsAliases=1 multi=/reg/g/psdm/data_test/multifile/test_000_amo01509
+test=001  events=000 doNotDumpEpicsAliases=1 multi=/reg/g/psdm/data_test/multifile/test_001_xppcom10
+test=003  events=000 doNotDumpEpicsAliases=1 multi=/reg/g/psdm/data_test/multifile/test_003_xpptut13

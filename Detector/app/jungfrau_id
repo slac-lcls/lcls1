@@ -1,0 +1,56 @@
+#!/usr/bin/env python
+#------------------------------
+"""
+  Prints jungfrau detector id name for specified dataset and detector name pattern or alias.
+
+  Created on 2018-04-19 by Mikhail Dubrovin
+"""
+from __future__ import print_function
+#------------------------------
+
+import logging
+logger = logging.getLogger(__name__)
+
+import sys
+import psana
+from Detector.UtilsJungfrau import id_jungfrau, psana_source, number_of_modules_in_jungfrau, string_from_source
+from Detector.jungfrau_datasets import DSNAMES, DETNAMES
+
+#------------------------------
+
+DSNAME_DEF = 'exp=xpptut15:run=410'
+DETNAME_DEF = 'Jungfrau'
+
+DSNAME  = sys.argv[1] if len(sys.argv) > 1 else DSNAME_DEF 
+DETNAME = sys.argv[2] if len(sys.argv) > 2 else DETNAME_DEF
+
+#------------------------------
+
+def usage():
+    return  'Usage: jungfrau_id <DSNAME> [<DETNAME>]\n'\
+           +'       where <DSNAME> is like one of the list:\n         %s\n' % '\n         '.join(DSNAMES)\
+           +'       <DETNAME> is optional parameterr like one of the list:\n         %s  ' % '\n         '.join(DETNAMES)\
+           +'\nEx:    jungfrau_id exp=detdaq17:run=177 DetLab.0:Jungfrau.2'
+
+#------------------------------
+
+def jungfrau_id() :    
+    logger.info('%s\nFinding Jungfrau Id in dataset "%s" using name pattern %s' % (80*'_', DSNAME, DETNAME))
+    if DSNAME==DSNAME_DEF and DETNAME==DETNAME_DEF: print(usage())
+    ds = psana.DataSource(DSNAME)
+    source = psana_source(ds.env(), DETNAME) 
+    strsrc = string_from_source(source).replace(':','-')
+    npanels = number_of_modules_in_jungfrau(ds.env(), source)
+    logger.info('Found source: %s, number of panels: %s' %(strsrc, str(npanels)))
+    id_jf = id_jungfrau(ds.env(), source)
+    if id_jf == strsrc : logger.warning('WARNING: numeric id is not available')
+    logger.info('Jungfrau id: %s' % (id_jf))
+
+#------------------------------
+
+if __name__ == "__main__" :
+    #logging.basicConfig(format='%(asctime)s %(name)s %(levelname)s: %(message)s', datefmt='%H:%M:%S', level=logging.DEBUG)
+    logging.basicConfig(format='%(message)s', level=logging.DEBUG)
+    jungfrau_id()
+
+#------------------------------

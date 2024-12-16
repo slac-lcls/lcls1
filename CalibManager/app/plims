@@ -1,0 +1,46 @@
+#!@PYTHON@
+
+"""This script starts stand alone version of the PlotImgSpe.
+
+This software was developed for the LCLS project.
+If you use all or part of it, please give an appropriate acknowledgement.
+
+@author Mikhail Dubrovin
+"""
+
+import os
+os.environ['LIBGL_ALWAYS_INDIRECT'] = '1' # get rid of libGL error: unable to load driver: swrast_dri.so
+
+
+def option_parser():
+
+    ifname_def = './roi-img'
+    ofname_def = './fig.png'
+    title_def  = 'Image viewer'
+    rot90_def  = 0
+    mirror_def = False
+    expand_def = True
+    fexmod_def = False
+    verb_def   = False
+
+    from optparse import OptionParser
+
+    parser = OptionParser(description='Plot image with minimal interactive control', usage ='usage: %prog [options] args')
+    parser.add_option('-i', '--ifname',  default=ifname_def, action='store', type='string', help='input image file name, default = %s' % ifname_def)
+    parser.add_option('-o', '--ofname',  default=ofname_def, action='store', type='string', help='output png file name for current canvas, default = %s' % ofname_def)
+    parser.add_option('-t', '--title',   default=title_def,  action='store', type='string', help='initial title of the garphical window, default = %s' % title_def)
+    parser.add_option('-r', '--rot90',   default=rot90_def,  action='store', type='int',    help='index for rotation angle by i*90 degree, default = %d' % rot90_def)
+    parser.add_option('-m', '--mirror',  default=mirror_def, action='store_true',           help='mirror reflection of the image around y axis, default = %s' % str(mirror_def))
+    parser.add_option('-e', '--expand',  default=expand_def, action='store_true',           help='expand button panel, default = %s' % str(expand_def))
+    parser.add_option('-v', '--verb',    default=verb_def,   action='store_true',           help='verbosity, default = %s' % str(verb_def))
+    parser.add_option('-f', '--fexmod',  default=fexmod_def, action='store_true',           help='file exchange mode on/off (True/False), default = %s' % fexmod_def)
+
+    return parser
+
+
+if __name__ == "__main__":
+    parser = option_parser()
+    from CalibManager.PlotImgSpe import do_work
+    do_work(parser)
+
+# EOF
