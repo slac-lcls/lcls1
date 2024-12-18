@@ -31,3 +31,4 @@ export SIT_DATA=$RELDIR/install/data:$SIT_ROOT/data/
 export PATH=$RELDIR/install/bin:${PATH}
 pyver=$(python -c "import sys; print(str(sys.version_info.major)+'.'+str(sys.version_info.minor))")
 export PYTHONPATH=$RELDIR/install/lib/python$pyver/site-packages
+export TESTRELDIR=$RELDIR/install
